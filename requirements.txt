@@ -1,0 +1,15 @@
+# GUI toolkit
+PySide6>=6.6
+
+# Download engine. The [default] extra pulls in yt-dlp-ejs (YouTube JS challenge
+# solving), certifi, brotli, websockets, etc. Keep yt-dlp up to date:
+#   pip install -U "yt-dlp[default]"
+yt-dlp[default]>=2025.10.22
+
+# JavaScript runtime used by yt-dlp to solve YouTube's player challenges.
+# Ships a ready-to-use Deno binary, so users don't install anything else.
+deno>=2.0
+
+# Optional but recommended: bundled FFmpeg binary used as a fallback when FFmpeg
+# is not installed system-wide. Remove this line if you install FFmpeg yourself.
+imageio-ffmpeg>=0.5
