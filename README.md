@@ -7,7 +7,7 @@
 **Download an entire YouTube playlist as MP4 videos in one click.**
 No sign-in, no cookies, nothing to install.
 
-[![Download for Windows](https://img.shields.io/badge/Download%20for%20Windows-v1.0.0-e11d48?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/farooq831/YT_Playlist_Downloader/releases/latest)
+[![Download for Windows](https://img.shields.io/badge/Download%20Setup%20for%20Windows-v1.0.0-e11d48?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/farooq831/YT_Playlist_Downloader/releases/latest)
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-0078D6?style=flat-square)
 ![Python](https://img.shields.io/badge/python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)
@@ -25,20 +25,23 @@ No sign-in, no cookies, nothing to install.
 
 ## 📥 Download and use (no setup needed)
 
-1. Go to the **[latest release](https://github.com/farooq831/YT_Playlist_Downloader/releases/latest)** and download **`YT-Playlist-Downloader-v1.0.0-Windows.zip`**. Don't download the *Source code* files; those are for developers.
-2. Right-click the zip and choose **Extract All… → Extract**.
-3. Open the extracted **`YT Playlist Downloader`** folder and double-click **`YT Playlist Downloader.exe`**.
+1. Go to the **[latest release](https://github.com/farooq831/YT_Playlist_Downloader/releases/latest)** and download **`YT-Playlist-Downloader-Setup-v1.0.0.exe`**. Don't download the *Source code* files; those are for developers.
+2. Double-click the setup file and click **Next → Install**. No admin password is needed.
+3. Open **YT Playlist Downloader** from your **desktop** or the **Start Menu**.
 4. Paste a playlist link, then click **Load Playlist → Start Download**. That's it!
 
-```
-YT Playlist Downloader/
-├── YT Playlist Downloader.exe   ← double-click this
-└── _internal/                   ← required files, keep them next to the .exe
-```
+After installing, you can **delete the setup file**. The app stays installed permanently, like any other program.
 
-> **"Windows protected your PC"?** Windows shows this for new apps that aren't code-signed. Click **More info → Run anyway**. You only need to do this the first time.
+> **"Windows protected your PC"?** Windows shows this for new apps that aren't code-signed. Click **More info → Run anyway**. You only need to do this once.
 
-> **Tip:** to start it from your desktop, right-click `YT Playlist Downloader.exe` and choose **Send to → Desktop (create shortcut)**. Don't move the `.exe` out of its folder.
+> **Uninstall:** go to **Windows Settings → Apps → Installed apps → YT Playlist Downloader → Uninstall**. Your downloaded videos are never deleted.
+
+<details>
+<summary>Prefer a portable version (no installation)?</summary>
+
+Download **`YT-Playlist-Downloader-v1.0.0-Windows.zip`**, right-click it and choose **Extract All**, then run **`YT Playlist Downloader.exe`** inside the extracted folder. You can delete the zip afterwards, but keep the extracted folder: the `_internal` folder must stay next to the `.exe`.
+
+</details>
 
 ## ✨ Features
 
@@ -96,7 +99,17 @@ pyinstaller --noconfirm --windowed --name "YT Playlist Downloader" --icon assets
   --collect-all imageio_ffmpeg --collect-all yt_dlp_ejs main.py
 ```
 
-The result is in `dist\YT Playlist Downloader\`. Zip that folder and attach it to a GitHub Release.
+The result is in `dist\YT Playlist Downloader\`.
+
+### Build the installer (Setup.exe)
+
+Install [Inno Setup 6](https://jrsoftware.org/isinfo.php) (free, or `winget install JRSoftware.InnoSetup`), then run:
+
+```bash
+"%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe" installer\setup.iss
+```
+
+This creates `dist\YT-Playlist-Downloader-Setup-v1.0.0.exe`. Attach it to a GitHub Release. For a new version, change `MyAppVersion` in [`installer/setup.iss`](installer/setup.iss) and `APP_VERSION` in [`config/constants.py`](config/constants.py).
 
 ### Tech stack
 
@@ -131,6 +144,7 @@ YT_Playlist_Downloader/
 ├── models/                  # data classes + Qt list model
 ├── config/                  # constants + JSON settings manager
 ├── utils/                   # logging, formatting, disk and path helpers
+├── installer/               # Inno Setup script (builds Setup.exe)
 ├── assets/                  # app icon + UI icons
 └── docs/screenshots/        # images used in this README
 ```
