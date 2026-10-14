@@ -12,10 +12,12 @@ Search order: bundled Deno (pip package) → Deno on PATH → Node.js on PATH.
 from __future__ import annotations
 
 import shutil
+import sys
 from functools import lru_cache
 from pathlib import Path
 
 from utils.logger import get_logger
+from utils.paths import project_root
 
 log = get_logger("js-runtime")
 
@@ -23,6 +25,11 @@ log = get_logger("js-runtime")
 @lru_cache(maxsize=1)
 def js_runtimes() -> dict[str, dict[str, str]]:
     """Value for yt-dlp's ``js_runtimes`` option (empty if none was found)."""
+    bundled = project_root() / "bin" / f"deno{'.exe' if sys.platform == 'win32' else ''}"
+    if bundled.is_file():  # shipped inside the packaged .exe build
+        log.debug("Using packaged Deno at %s", bundled)
+        return {"deno": {"path": str(bundled)}}
+
     try:
         import deno  # type: ignore[import-not-found]
 
